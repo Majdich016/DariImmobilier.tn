@@ -58,4 +58,168 @@ public class Furniture implements Serializable {
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch=FetchType.EAGER)
 	private List<ShoppingCard> shoppingCards= new ArrayList<>();
+
+
+	
+	
+
+	public Furniture() {
+		super();
+	}
+
+
+
+
+
+	public Furniture(int id, String name, String description, float price, int quantity, Date publishedDate,
+			FurnitureType type, List<ShoppingCard> shoppingCards) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+		this.publishedDate = publishedDate;
+		this.type = type;
+		this.shoppingCards = shoppingCards;
+	}
+
+
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+
+
+	public float getPrice() {
+		return price;
+	}
+
+
+
+
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+
+
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+
+
+
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+
+
+
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
+	}
+
+
+
+
+
+	public FurnitureType getType() {
+		return type;
+	}
+
+
+
+
+
+	public void setType(FurnitureType type) {
+		this.type = type;
+	}
+
+
+
+
+
+	public List<ShoppingCard> getShoppingCards() {
+		return shoppingCards;
+	}
+
+
+
+
+
+	public void setShoppingCards(List<ShoppingCard> shoppingCards) {
+		this.shoppingCards = shoppingCards;
+	}
+
+
+
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
+	
 }
