@@ -88,6 +88,22 @@ public class Furniture implements Serializable {
 
 
 
+	public Furniture(String name, String description, float price, int quantity, Date publishedDate, FurnitureType type,
+			List<ShoppingCard> shoppingCards) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+		this.publishedDate = publishedDate;
+		this.type = type;
+		this.shoppingCards = shoppingCards;
+	}
+
+
+
+
+
 	public int getId() {
 		return id;
 	}
