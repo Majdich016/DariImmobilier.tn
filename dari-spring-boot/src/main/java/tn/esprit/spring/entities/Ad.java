@@ -62,6 +62,8 @@ public class Ad implements Serializable{
 		}
 		
 
+	
+
 
 		public Ad(int idAd, String description, String location, int area, Date adDate, int viewsNumber,
 				Boolean success, int score, KindOfGood kindofgood, List<Comment> comments,
@@ -79,6 +81,9 @@ public class Ad implements Serializable{
 			this.comments = comments;
 			this.multimedias = multimedias;
 		}
+
+
+
 
 
 		public int getIdAd() {

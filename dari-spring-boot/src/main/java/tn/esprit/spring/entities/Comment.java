@@ -26,7 +26,7 @@ public class Comment implements Serializable{
 			private Boolean IsBlocked;
 			
 			@ManyToOne
-			private Ad ad;
+			private Ad ads;
 
 			public int getIdComment() {
 				return IdComment;
@@ -60,12 +60,12 @@ public class Comment implements Serializable{
 				IsBlocked = isBlocked;
 			}
 
-			public Ad getAd() {
-				return ad;
+			public Ad getAds() {
+				return ads;
 			}
 
-			public void setAd(Ad ad) {
-				this.ad = ad;
+			public void setAds(Ad ads) {
+				this.ads = ads;
 			}
 
 			public static long getSerialversionuid() {
@@ -77,18 +77,18 @@ public class Comment implements Serializable{
 				// TODO Auto-generated constructor stub
 			}
 
-			public Comment(String descriptionComment, int numberLikes, Boolean isBlocked, Ad ad) {
+			public Comment(String descriptionComment, int numberLikes, Boolean isBlocked, Ad ads) {
 				super();
 				DescriptionComment = descriptionComment;
 				NumberLikes = numberLikes;
 				IsBlocked = isBlocked;
-				this.ad = ad;
+				this.ads = ads;
 			}
 
 			@Override
 			public String toString() {
 				return "Comment [IdComment=" + IdComment + ", DescriptionComment=" + DescriptionComment
-						+ ", NumberLikes=" + NumberLikes + ", IsBlocked=" + IsBlocked + ", ad=" + ad + "]";
+						+ ", NumberLikes=" + NumberLikes + ", IsBlocked=" + IsBlocked + ", ads=" + ads + "]";
 			}
 			
 

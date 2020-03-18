@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "T_MULTIMEDIA")
@@ -22,8 +23,8 @@ public class Multimedia implements Serializable {
 			//@NotNull
 			private TypeMedia typemedia;
 
-			/*@ManyToOne
-			private Ad ads;*/
+			@ManyToOne
+			private Ad ad;
 
 			public Multimedia() {
 				super();
