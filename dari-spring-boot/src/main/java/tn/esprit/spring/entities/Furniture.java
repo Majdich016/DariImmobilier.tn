@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "T_FURNITURE")
@@ -44,7 +47,7 @@ public class Furniture implements Serializable {
 	private int quantity;
 	
 	@Column(name = "FURNITURE_PUBLISHED_DATE")
-	@Temporal(TemporalType.DATE)
+	@CreationTimestamp
 	private Date publishedDate;
 	
 	
@@ -65,6 +68,22 @@ public class Furniture implements Serializable {
 
 	public Furniture() {
 		super();
+	}
+
+
+
+
+
+	public Furniture(int id, String name, String description, float price, int quantity, FurnitureType type,
+			List<ShoppingCard> shoppingCards) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+		this.type = type;
+		this.shoppingCards = shoppingCards;
 	}
 
 
