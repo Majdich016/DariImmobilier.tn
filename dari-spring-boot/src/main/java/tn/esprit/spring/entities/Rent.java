@@ -1,7 +1,6 @@
 package tn.esprit.spring.entities;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,9 +12,11 @@ public class Rent extends Ad {
 	private static final long serialVersionUID = -3046278688391172322L;
 
 	@Temporal(TemporalType.DATE)
-	private Date dateDebut;
+	private Date StartDate;
+	
 	@Temporal(TemporalType.DATE)
-	private Date dateFin;
+	private Date EndDate;
+	
 	@Enumerated(EnumType.STRING)
 	//@NotNull
 	private RentPeriod rentperiod;
@@ -24,48 +25,39 @@ public class Rent extends Ad {
 	//@NotNull
 	private RentingType rentingtype;
 
-	
-	
-	public Rent(Date dateDebut, Date dateFin, RentPeriod rentperiod, RentingType rentingtype) {
+	public Rent() {
 		super();
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
+	}
+
+	public Rent(Date startDate, Date endDate, RentPeriod rentperiod, RentingType rentingtype) {
+		super();
+		StartDate = startDate;
+		EndDate = endDate;
 		this.rentperiod = rentperiod;
 		this.rentingtype = rentingtype;
 	}
-	
+
+	public Date getStartDate() {
+		return StartDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		StartDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return EndDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		EndDate = endDate;
+	}
 
 	public RentPeriod getRentperiod() {
 		return rentperiod;
 	}
 
-
 	public void setRentperiod(RentPeriod rentperiod) {
-		this.rentperiod = rentperiod;
-	}
-
-
-	public Date getDateDebut() {
-		return dateDebut;
-	}
-
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
-	}
-
-	public Date getDateFin() {
-		return dateFin;
-	}
-
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
-	}
-
-	public RentPeriod getRentperiode() {
-		return rentperiod;
-	}
-
-	public void setRentperiode(RentPeriod rentperiod) {
 		this.rentperiod = rentperiod;
 	}
 
@@ -83,8 +75,10 @@ public class Rent extends Ad {
 
 	@Override
 	public String toString() {
-		return "Rent [dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", rentperiod=" + rentperiod
-				+ ", rentingtype=" + rentingtype + "]";
+		return "Rent [StartDate=" + StartDate + ", EndDate=" + EndDate + ", rentperiod=" + rentperiod + ", rentingtype="
+				+ rentingtype + "]";
 	}
+
+	
 	
 }
