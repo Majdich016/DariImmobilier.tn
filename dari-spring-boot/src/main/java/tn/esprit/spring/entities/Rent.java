@@ -1,9 +1,16 @@
 package tn.esprit.spring.entities;
 
 import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -11,6 +18,7 @@ import javax.persistence.TemporalType;
 public class Rent extends Ad {
 	private static final long serialVersionUID = -3046278688391172322L;
 
+	
 	@Temporal(TemporalType.DATE)
 	private Date StartDate;
 	
@@ -24,6 +32,11 @@ public class Rent extends Ad {
 	@Enumerated(EnumType.STRING)
 	//@NotNull
 	private RentingType rentingtype;
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="rent") 
+	private Set<RatingA> Ratings;
+
 
 	public Rent() {
 		super();
