@@ -2172,3 +2172,43 @@ Caused by: java.sql.SQLSyntaxErrorException: La table 'dari_database.t_wishlist'
 2020-03-19 18:04:19.617  INFO 14952 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2020-03-19 18:04:19.619  INFO 14952 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2020-03-19 18:04:19.660  INFO 14952 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-03-19 20:49:23.485  INFO 12596 --- [main] t.e.s.DariSpringBootApplicationTests     : Starting DariSpringBootApplicationTests on DESKTOP-6L40O5E with PID 12596 (started by Loua in C:\Users\Loua\Documents\workspace-sts-3.8.4.RELEASE\dari-spring-boot\dari-spring-boot)
+2020-03-19 20:49:23.486  INFO 12596 --- [main] t.e.s.DariSpringBootApplicationTests     : No active profile set, falling back to default profiles: default
+2020-03-19 20:49:24.135  INFO 12596 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 20:49:24.216  INFO 12596 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70ms. Found 5 JPA repository interfaces.
+2020-03-19 20:49:24.783  INFO 12596 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 20:49:24.865  INFO 12596 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 20:49:25.031  INFO 12596 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 20:49:25.354  INFO 12596 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-03-19 20:49:25.496  INFO 12596 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-03-19 20:49:25.511  INFO 12596 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 20:49:25.695  WARN 12596 --- [main] org.hibernate.cfg.AnnotationBinder       : HHH000139: Illegal use of @Table in a subclass of a SINGLE_TABLE hierarchy: tn.esprit.spring.entities.ConfirmedAppointment
+2020-03-19 20:49:53.927  INFO 12596 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 20:49:53.935  INFO 12596 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 20:49:54.733  WARN 12596 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-03-19 20:49:55.066  INFO 12596 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-03-19 20:49:55.544  INFO 12596 --- [main] t.e.s.DariSpringBootApplicationTests     : Started DariSpringBootApplicationTests in 32.32 seconds (JVM running for 33.117)
+2020-03-19 20:49:56.288  INFO 12596 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-03-19 20:49:56.291  INFO 12596 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 20:49:56.293  INFO 12596 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-03-19 20:49:56.307  INFO 12596 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-03-19 20:55:18.121  INFO 13528 --- [main] t.e.s.DariSpringBootApplicationTests     : Starting DariSpringBootApplicationTests on DESKTOP-6L40O5E with PID 13528 (started by Loua in C:\Users\Loua\Documents\workspace-sts-3.8.4.RELEASE\dari-spring-boot\dari-spring-boot)
+2020-03-19 20:55:18.124  INFO 13528 --- [main] t.e.s.DariSpringBootApplicationTests     : No active profile set, falling back to default profiles: default
+2020-03-19 20:55:18.673  INFO 13528 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 20:55:18.760  INFO 13528 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75ms. Found 5 JPA repository interfaces.
+2020-03-19 20:55:19.294  INFO 13528 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 20:55:19.362  INFO 13528 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 20:55:19.518  INFO 13528 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 20:55:19.813  INFO 13528 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-03-19 20:55:19.950  INFO 13528 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-03-19 20:55:19.965  INFO 13528 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 20:55:20.140  WARN 13528 --- [main] org.hibernate.cfg.AnnotationBinder       : HHH000139: Illegal use of @Table in a subclass of a SINGLE_TABLE hierarchy: tn.esprit.spring.entities.ConfirmedAppointment
+2020-03-19 20:55:48.389  INFO 13528 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 20:55:48.398  INFO 13528 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 20:55:49.094  WARN 13528 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-03-19 20:55:49.476  INFO 13528 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-03-19 20:55:50.072  INFO 13528 --- [main] t.e.s.DariSpringBootApplicationTests     : Started DariSpringBootApplicationTests in 32.209 seconds (JVM running for 32.971)
+2020-03-19 20:55:51.418  INFO 13528 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-03-19 20:55:51.421  INFO 13528 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 20:55:51.425  INFO 13528 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-03-19 20:55:51.439  INFO 13528 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
