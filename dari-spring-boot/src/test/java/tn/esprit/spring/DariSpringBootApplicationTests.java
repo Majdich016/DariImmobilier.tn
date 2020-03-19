@@ -22,7 +22,9 @@ public class DariSpringBootApplicationTests {
 	public void contextLoads() throws ParseException {
 		//ws.deleteWishList(1);
 		ws.retrieveAllWishLists();
-//		us.retrieveUser("1");
+		//ws.retrieveWishList("1");
+		
+
 	}
 
 }

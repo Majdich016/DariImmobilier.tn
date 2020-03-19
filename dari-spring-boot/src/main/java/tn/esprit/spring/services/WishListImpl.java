@@ -13,7 +13,7 @@ import tn.esprit.spring.repository.WishListRepository;
 @Service
 public class WishListImpl implements WishListService{
 
-	public static final Logger l = LogManager.getLogger(AdServiceImpl.class);
+	public static final Logger L = LogManager.getLogger(AdServiceImpl.class);
 
 	@Autowired
 	WishListRepository wishListRepository;
@@ -41,7 +41,7 @@ public class WishListImpl implements WishListService{
 		// TODO Auto-generated method stub
 		List<WishList> wls=(List<WishList>)wishListRepository.findAll();
 		for (WishList wl : wls) {
-			l.info("whishlist +++"+wl);
+			L.info("whishlist +++"+wl);
 		}
 		return wls;
 	}
@@ -49,7 +49,10 @@ public class WishListImpl implements WishListService{
 	@Override
 	public WishList retrieveWishList(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		WishList u= wishListRepository.findById(Integer.parseInt(id)).orElse(null);
+		L.info("retrive user by id ++++:"+u);
+		return u;
+				
 	}
 
 }
