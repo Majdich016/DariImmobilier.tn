@@ -1,6 +1,8 @@
 package tn.esprit.spring.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -22,5 +24,24 @@ public class IControllerFurnitureImpl {
 		
 		return furniture.getId();
 	}
+	
+	
+	public List<Furniture> getAllFurniture(){
+		
+		return iFurnitureService.getAllFurniture();
+	}
+	
+	public List<String> getAllFurnitureNamesJPQL() {
+		
+		return  iFurnitureService.getAllFurnitureNamesJPQL();
+	}
 
+	
+	public void deleteFurnitureById(int furnitureId){
+		
+		iFurnitureService.deleteFurnitureById(furnitureId);
+	}
+	public void ajouterMeubleDansPanier(int furnitureId, int panierId){
+		iFurnitureService.ajouterMeubleDansPanier(furnitureId, panierId);
+	}
 }
