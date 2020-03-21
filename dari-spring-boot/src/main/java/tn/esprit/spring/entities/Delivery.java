@@ -41,4 +41,6 @@ public class Delivery implements Serializable {
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch=FetchType.EAGER)
 	private List<Ordered> ordereds= new ArrayList<>();
+	
+	// test git 
 }
