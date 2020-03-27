@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Ad;
+import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.services.IAdService;
 
 @RestController
 public class RestControlAd {
 	@Autowired
 	IAdService iadService;
-
+	
+		
 	// localhost:8081/SpringMVC/servlet/retrieve-all-ads
 	//GET
 	@GetMapping("/retrieve-all-ads") 
@@ -28,31 +30,30 @@ public class RestControlAd {
 		List<Ad> list = iadService.retrieveAllAds(); 
 		return list;  } 
 
-	// localhost:8081/SpringMVC/servlet/retrieve-ad/{ad-id} 
+	// localhost:8081/SpringMVC/servlet/getAdById-ad/{ad-id} 
 	//GET
-	@GetMapping("/retrieve-ad/{ad-id}") 
+	@GetMapping("/getAdById-ad/{ad-id}") 
 	@ResponseBody  
-	public Ad retrieveAd
-	(@PathVariable("ad-id") String adId) {
-		return iadService.retrieveAd(adId);} 
+	public Ad getAdById
+	(@PathVariable("ad-id") int adId) {
+		return iadService.getAdById(adId);} 
 
-	// Ajouter User : 
+	// Ajouter AD : 
 	// localhost:8081/SpringMVC/servlet/add-ad
-	/*   {
- 		"kindofgood": null,
- 		"comments": [],
- 		"multimedias": [],
- 		"location": "italia",
- 		"description": "ADMINISTRATEUR",
- 		"idAd": 2,
- 		"area": 100,
- 		"adDate": null,
- 		"viewsNumber": 0,
- 		"success": null,
- 		"score": 1
-			}*/
 	//POST
-
+	/*{
+    "kindofgood": null,
+    "comments": [],
+    "multimedias": null,
+    "location": null,
+    "description": null,
+    "area": 0,
+    "idAd": 7,
+    "adDate": null,
+    "success": null,
+    "score": 0,
+    "viewsNumber": 0
+}*/
 	@PostMapping("/add-ad") 
 	@ResponseBody 
 	public Ad addAd(@RequestBody Ad ad) { 
@@ -63,15 +64,56 @@ public class RestControlAd {
 	//DELETE
 	@DeleteMapping("/remove-ad/{ad-id}") 
 	@ResponseBody 
-	public void removeUser(@PathVariable("ad-id") int adId) { 
+	public void removeAd(@PathVariable("ad-id") int adId) { 
 		iadService.deleteAd(adId);}  
 
+	//////////////////////////////////////////////////////////COMMENT/////////////////////////////////////////////////////////////////////////////////////
+	// Ajouter Comment : 
+	// localhost:8081/SpringMVC/servlet/add-comment
+	//POST
+
+	@PostMapping("/add-comment") 
+	@ResponseBody 
+	public Comment addComment(@RequestBody Comment comment) { 
+		iadService.addComment(comment); 
+		return comment; }
 
 	// localhost:8081/SpringMVC/servlet/modify-ad  
 	//PUT
-	@PutMapping("/modify-ad") @ResponseBody 
-	public Ad modifyAd(@RequestBody Ad ad) { 
-		return iadService.updateAd(ad); }
+	@PutMapping("/modify-ad") 
+	@ResponseBody 
+	public Ad modifyAd(@RequestBody Ad ad) 
+	{ 	return iadService.updateAd(ad); }
 
+	// /localhost:8081/SpringMVC/servlet/remove-comment/{comment-id} 
+	//DELETE
+	@DeleteMapping("/remove-comment/{comment-id}") 
+	@ResponseBody 
+	public void removeComment(@PathVariable("comment-id") int commentId) { 
+		iadService.deleteComment(commentId);}  
+
+	// localhost:8081/SpringMVC/servlet/modify-comment  
+	//PUT
+	@PutMapping("/modify-comment") @ResponseBody 
+	public Comment modifyComment(@RequestBody Comment comment) { 
+		return iadService.UpdateComment(comment); }
+
+
+	// http://localhost:8081/SpringMVC/servlet/AssignCommentToanAd/1/1
+	@PutMapping(value = "/AssignCommentToanAd/{idcomment}/{idad}") 
+	public void AssignCommentToanAd(@PathVariable("idcomment")int CommentId, @PathVariable("idad")int AdId) {
+		iadService.AssignCommentToanAd(CommentId, AdId); 
+	}
+
+
+
+	// http://localhost:8081/SpringMVC/servlet/getAllCommentsByAd/1
+	@GetMapping(value = "getAllCommentsByAd/{idad}")
+	@ResponseBody
+	public List<String> getAllCommentsByAd (@PathVariable("idad") int AdId) {
+		return iadService.getAllCommentsByAd(AdId);
+	}
+
+	
 }
 
