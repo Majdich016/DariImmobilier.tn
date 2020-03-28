@@ -26,6 +26,6 @@ public class HistoriqueAL implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date DateAction;
 
-	@OneToOne (mappedBy="historiqueAL") 
-	private	Client client; 
+	//@OneToOne (mappedBy="historiqueAL") 
+	//private	Client client; 
 }

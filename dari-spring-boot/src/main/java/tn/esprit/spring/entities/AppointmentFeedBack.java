@@ -11,18 +11,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AppointmentFeedBack")
+@Table(name = "t_AppointmentFeedBack")
 public class AppointmentFeedBack implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name="AppFeedBack_ID")
 	private Long IdAppFeedBack;
-	@Column(name="DescriptionFeedBack")
 	private String DescriptionFeedBack;
+
+	private boolean Likes;
+
 	
 	@ManyToOne
-	//Client client;
+	Client client;
 	
 	public Long getIdAppFeedBack() {
 		return IdAppFeedBack;
@@ -39,6 +40,10 @@ public class AppointmentFeedBack implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "AppointmentFeedBack [IdAppFeedBack=" + IdAppFeedBack + ", DescriptionFeedBack=" + DescriptionFeedBack
@@ -48,6 +53,30 @@ public class AppointmentFeedBack implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public AppointmentFeedBack(Long idAppFeedBack, String descriptionFeedBack) {
+		super();
+		IdAppFeedBack = idAppFeedBack;
+		DescriptionFeedBack = descriptionFeedBack;
+	}
+	public boolean isLikes() {
+		return Likes;
+	}
+	public void setLikes(boolean likes) {
+		Likes = likes;
+	}
+	public AppointmentFeedBack(Long idAppFeedBack, String descriptionFeedBack, boolean likes, Client client) {
+		super();
+		IdAppFeedBack = idAppFeedBack;
+		DescriptionFeedBack = descriptionFeedBack;
+		Likes = likes;
+		this.client = client;
+	}
+	
+	
+	
+	
 	
 	
 
