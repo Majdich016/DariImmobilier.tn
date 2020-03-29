@@ -1,13 +1,27 @@
 package tn.esprit.spring;
 
+import java.text.ParseException;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import tn.esprit.spring.services.WishListService;
+
+//@RunWith(SpringRunner.class)
 @SpringBootTest
-class DariSpringBootApplicationTests {
+public class DariSpringBootApplicationTests {
+	
+	@Autowired
+	WishListService ws;
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() throws ParseException {
+		//ws.deleteWishList(1);
+		//ws.retrieveAllWishLists();
+		//ws.retrieveWishList("1");
+		
+
 	}
 
 }
