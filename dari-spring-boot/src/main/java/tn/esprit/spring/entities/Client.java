@@ -7,10 +7,12 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -29,6 +31,11 @@ public class Client extends User{
 	private Set<AppointmentFeedBack> AppointmentFeedBack;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private Set<Appointment> Appointment;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="client",fetch=FetchType.EAGER) 
+	private Set<WishList> wishLists;	
+	@OneToOne(mappedBy="client") 
+	private HistoriqueAL historiqueAL;
+
 	public Long getId() {
 		return id;
 	}
@@ -59,6 +66,18 @@ public class Client extends User{
 	public void setNbre(int nbre) {
 		this.nbre = nbre;
 	}
+	public Set<WishList> getWishLists() {
+		return wishLists;
+	}
+	public void setWishLists(Set<WishList> wishLists) {
+		this.wishLists = wishLists;
+	}
+	public HistoriqueAL getHistoriqueAL() {
+		return historiqueAL;
+	}
+	public void setHistoriqueAL(HistoriqueAL historiqueAL) {
+		this.historiqueAL = historiqueAL;
+	}
 	public Client(Long id, String firstName, String lastname, Date dateNaissance, String email, String password,
 			Long id2, String picture, String descriptionBlock, int nbre, boolean block) {
 		//super(id, firstName, lastname, dateNaissance, email, password);
@@ -67,6 +86,18 @@ public class Client extends User{
 		DescriptionBlock = descriptionBlock;
 		this.nbre = nbre;
 		this.block = block;
+	}
+	public Client(Long id, String firstName, String lastname, Date dateNaissance, String email, String password,
+			Long id2, String picture, String descriptionBlock, int nbre, boolean block, Set<WishList> wishLists,
+			HistoriqueAL historiqueAL) {
+		super(id, firstName, lastname, dateNaissance, email, password);
+		id = id2;
+		this.picture = picture;
+		DescriptionBlock = descriptionBlock;
+		this.nbre = nbre;
+		this.block = block;
+		this.wishLists = wishLists;
+		this.historiqueAL = historiqueAL;
 	}
 	public Client() {
 		super();
@@ -81,6 +112,7 @@ public class Client extends User{
 		return "Client [id=" + id + ", picture=" + picture + ", DescriptionBlock=" + DescriptionBlock + ", nbre=" + nbre
 				+ ", block=" + block + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

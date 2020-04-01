@@ -27,10 +27,6 @@ public class Rent extends Ad {
 	
 	@Enumerated(EnumType.STRING)
 	//@NotNull
-	private RentPeriod rentperiod;
-	
-	@Enumerated(EnumType.STRING)
-	//@NotNull
 	private RentingType rentingtype;
 	
 	
@@ -42,11 +38,10 @@ public class Rent extends Ad {
 		super();
 	}
 
-	public Rent(Date startDate, Date endDate, RentPeriod rentperiod, RentingType rentingtype) {
+	public Rent(Date startDate, Date endDate, RentingType rentingtype) {
 		super();
 		StartDate = startDate;
 		EndDate = endDate;
-		this.rentperiod = rentperiod;
 		this.rentingtype = rentingtype;
 	}
 
@@ -66,14 +61,6 @@ public class Rent extends Ad {
 		EndDate = endDate;
 	}
 
-	public RentPeriod getRentperiod() {
-		return rentperiod;
-	}
-
-	public void setRentperiod(RentPeriod rentperiod) {
-		this.rentperiod = rentperiod;
-	}
-
 	public RentingType getRentingtype() {
 		return rentingtype;
 	}
@@ -88,10 +75,12 @@ public class Rent extends Ad {
 
 	@Override
 	public String toString() {
-		return "Rent [StartDate=" + StartDate + ", EndDate=" + EndDate + ", rentperiod=" + rentperiod + ", rentingtype="
-				+ rentingtype + "]";
+		return "Rent [StartDate=" + StartDate + ", EndDate=" + EndDate + ", rentingtype=" + rentingtype + "]";
 	}
 
+	
+
+	
 	
 	
 }

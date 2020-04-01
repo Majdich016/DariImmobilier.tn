@@ -14,9 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -75,11 +75,11 @@ public class Ad implements Serializable{
 		private List<Comment> comments = new ArrayList<>();
 		
 		@OneToMany
-		(cascade = CascadeType.ALL, mappedBy="ad")
+		(cascade = CascadeType.ALL, mappedBy="ad",fetch=FetchType.EAGER)
 		private Set<Multimedia> multimedias;
 		
-		@ManyToMany(cascade = CascadeType.ALL) 
-		private Set<FavoriteAd> favoriteAd;
+		@OneToOne(mappedBy="ad") 
+		FavoriteAd favoriteAd; 
 
 		
 		public Ad() {
@@ -87,13 +87,15 @@ public class Ad implements Serializable{
 			// TODO Auto-generated constructor stub
 		}
 
-		
+
+
+
 
 		public Ad(int idAd, String description, String location, Date addDate, int viewsNumber, Boolean success,
 				int score, float price, int nbRooms, int surface, Boolean terrace, Boolean swimmingPool, Boolean garage,
 				Boolean garden, Boolean furnished, Boolean airConditioning, Boolean heater, Boolean buildable,
-				Boolean serviced, KindOfGood kindofgood, List<Comment> comments, Set<Multimedia> multimedias,
-				Set<FavoriteAd> favoriteAd) {
+				Boolean serviced, KindOfGood kindofgood, User user, List<Comment> comments, Set<Multimedia> multimedias,
+				FavoriteAd favoriteAd) {
 			super();
 			IdAd = idAd;
 			Description = description;
@@ -115,10 +117,15 @@ public class Ad implements Serializable{
 			this.buildable = buildable;
 			this.serviced = serviced;
 			this.kindofgood = kindofgood;
+			this.user = user;
 			this.comments = comments;
 			this.multimedias = multimedias;
 			this.favoriteAd = favoriteAd;
 		}
+
+
+
+
 
 
 
@@ -343,14 +350,21 @@ public class Ad implements Serializable{
 		}
 
 
-		public Set<FavoriteAd> getFavoriteAd() {
+
+		public FavoriteAd getFavoriteAd() {
 			return favoriteAd;
 		}
 
 
-		public void setFavoriteAd(Set<FavoriteAd> favoriteAd) {
+
+
+
+		public void setFavoriteAd(FavoriteAd favoriteAd) {
 			this.favoriteAd = favoriteAd;
 		}
+
+
+
 
 
 		public static long getSerialversionuid() {
@@ -367,7 +381,7 @@ public class Ad implements Serializable{
 					+ ", SwimmingPool=" + SwimmingPool + ", Garage=" + Garage + ", Garden=" + Garden + ", Furnished="
 					+ Furnished + ", AirConditioning=" + AirConditioning + ", heater=" + heater + ", buildable="
 					+ buildable + ", serviced=" + serviced + ", kindofgood=" + kindofgood + ", comments=" + comments
-					+ ", multimedias=" + multimedias + ", favoriteAd=" + favoriteAd + "]";
+					+ ", multimedias=" + multimedias +"]";
 		}
 
 

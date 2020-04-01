@@ -1,6 +1,8 @@
 package tn.esprit.spring.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_WISHLIST")
 public class WishList {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -20,6 +23,7 @@ public class WishList {
 	private int surfacemax; 
 	private int budgetmin; 
 	private int budgetmax;
+	private String location;
 	private int nbRooms;
 	private Boolean buildable;
 	private Boolean serviced;
@@ -31,27 +35,35 @@ public class WishList {
 	private Boolean AirConditioning;
 	private Boolean heater;
 	
+	@Enumerated(EnumType.STRING)
+	private KindOfGood kindofgood;
 	
 	@ManyToOne 
 	Client client; 
 	
-	
+	/////////////////////////// constructeur //////////////////////////
 	
 	public WishList() {
 		super();
 	}
 	
-		
+
+
 	
-	public WishList(int idW, int surfacemin, int surfacemax, int budgetmin, int budgetmax, int nbRooms,
+
+
+
+
+public WishList(int idW, int surfacemin, int surfacemax, int budgetmin, int budgetmax, String location, int nbRooms,
 			Boolean buildable, Boolean serviced, Boolean terrace, Boolean swimmingPool, Boolean garage, Boolean garden,
-			Boolean furnished, Boolean airConditioning, Boolean heater) {
+			Boolean furnished, Boolean airConditioning, Boolean heater, KindOfGood kindofgood, Client client) {
 		super();
 		IdW = idW;
 		this.surfacemin = surfacemin;
 		this.surfacemax = surfacemax;
 		this.budgetmin = budgetmin;
 		this.budgetmax = budgetmax;
+		this.location = location;
 		this.nbRooms = nbRooms;
 		this.buildable = buildable;
 		this.serviced = serviced;
@@ -62,8 +74,18 @@ public class WishList {
 		Furnished = furnished;
 		AirConditioning = airConditioning;
 		this.heater = heater;
+		this.kindofgood = kindofgood;
+		this.client = client;
 	}
 
+
+
+
+
+
+
+
+////////////////// Getters and Setters ////////////////////////
 
 
 
@@ -162,16 +184,66 @@ public class WishList {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	
+
+	public KindOfGood getKindofgood() {
+		return kindofgood;
+	}
+
+
+
+	public void setKindofgood(KindOfGood kindofgood) {
+		this.kindofgood = kindofgood;
+	}
+
+
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 
 
 	@Override
 	public String toString() {
 		return "WishList [IdW=" + IdW + ", surfacemin=" + surfacemin + ", surfacemax=" + surfacemax + ", budgetmin="
-				+ budgetmin + ", budgetmax=" + budgetmax + ", nbRooms=" + nbRooms + ", buildable=" + buildable
-				+ ", serviced=" + serviced + ", Terrace=" + Terrace + ", SwimmingPool=" + SwimmingPool + ", Garage="
-				+ Garage + ", Garden=" + Garden + ", Furnished=" + Furnished + ", AirConditioning=" + AirConditioning
-				+ ", heater=" + heater + "]";
+				+ budgetmin + ", budgetmax=" + budgetmax + ", location=" + location + ", nbRooms=" + nbRooms
+				+ ", buildable=" + buildable + ", serviced=" + serviced + ", Terrace=" + Terrace + ", SwimmingPool="
+				+ SwimmingPool + ", Garage=" + Garage + ", Garden=" + Garden + ", Furnished=" + Furnished
+				+ ", AirConditioning=" + AirConditioning + ", heater=" + heater + ", kindofgood=" + kindofgood
+				+ ", client=" + client + "]";
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
 	
 	
 	
