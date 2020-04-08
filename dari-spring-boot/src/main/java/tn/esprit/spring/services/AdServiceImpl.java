@@ -34,7 +34,6 @@ public class AdServiceImpl implements IAdService {
 	@Override
 	public Ad addAd(Ad ad) {
 		adRepository.save(ad);	
-		// ws.NotifSms(ad);
 		return ad;
 	}
 
