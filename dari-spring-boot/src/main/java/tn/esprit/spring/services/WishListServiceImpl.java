@@ -24,7 +24,8 @@ public class WishListServiceImpl implements WishListService{
 	WishListRepository wishListRepository;
 	@Autowired
 	ClientRepository clientRepository;
-	
+/*	@Autowired
+	SmsSender ss;*/
 	
 	@Override	
 	public WishList addWishList(WishList wl) {
@@ -79,6 +80,7 @@ public class WishListServiceImpl implements WishListService{
 
 	
 	 
+	 
 	@Override
 	public Boolean comparaison(WishList wl, Ad ad) {
 		Boolean k = false;
@@ -88,7 +90,7 @@ public class WishListServiceImpl implements WishListService{
 				&& ad.getGarden().equals(wl.getGarden()) && ad.getGarage().equals(wl.getGarage()) && ad.getSwimmingPool().equals(wl.getSwimmingPool())
 				&& ad.getTerrace().equals(wl.getTerrace()) && ad.getAirConditioning().equals(wl.getAirConditioning()) 
 				&& ad.getHeater().equals(wl.getHeater()) && ad.getFurnished().equals(wl.getFurnished()) && ad.getLocation().equals(wl.getLocation())
-				&& ad.getKindofgood().equals(wl.getKindofgood())){
+				){
 			k= true;
 		}
 		L.info("Alerte++++++++++:"+k);		
@@ -96,11 +98,12 @@ public class WishListServiceImpl implements WishListService{
 		return k;		
 		}
 	
-
+/*	
 	@Override
-	public List<Client> getMyFunction(Ad ad) {
+	public void NotifSms(Ad ad) {
 		
-		//wls=(List<WishList>)wishListRepository.findAll();
+		//SmsRequest smsRequest = new SmsRequest();
+		SmsRequest smsRequest = new SmsRequest("+21620752433","Une annonce conforme aux critères préenregistrés vient d'être poster! vous la retrouveré parmis vos favoris"); //commentaire
 		List<Client> list= new ArrayList<>();
 		
 		for (WishList wl : wishListRepository.findAll()) {		
@@ -108,21 +111,13 @@ public class WishListServiceImpl implements WishListService{
 				list.add(wl.getClient());
 				L.info("ALERTE +++++++++++: " + wl.getClient());
 			}		
-		}		
+		}				
+		for(Client client: list){
+			//SmsRequest smsRequest = new SmsRequest("client.phoneNumber","Une annonce conforme aux critères préenregistrés vient d'être poster! vous la retrouveré parmis vos favoris");
+			ss.sendSms(smsRequest);
+		}	
+	}*/
 		
-		return list;	
-		
-		// wa9t l add
-		
-		/* if (list != null)
-		   {
-		   		eb3ath notif leli f list
-		   }
-		 */
-		
-		
-	}	
-	
 	
 	
 	

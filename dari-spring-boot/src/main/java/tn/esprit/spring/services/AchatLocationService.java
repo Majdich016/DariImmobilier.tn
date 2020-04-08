@@ -11,6 +11,9 @@ public interface AchatLocationService {
 	//// 1er filtre : Séparation entre les annonces de vente et de Location
 	List<Sell> SellAds();
 	List<Rent> RentAds();
+	List<Rent> RentAdsTypeRent();
+	List<Rent> RentAdsTypeH();
+	List<Rent> RentAdsTypeTemp();
 	//// 2eme type de filtre: Filtres multicritères 
 	List<Ad> FiltreMulticritère();
 	

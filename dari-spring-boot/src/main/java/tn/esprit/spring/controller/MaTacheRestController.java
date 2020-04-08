@@ -24,7 +24,7 @@ public class MaTacheRestController {
 	 @Autowired 
 	 FavoriteAdService favoriteAdService;
 	
-	 /////////////////// WishList//////////////////////////////////
+	 ///////////////////// WishList//////////////////////////////////
 	 
 	    //http://localhost:8081/SpringMVC/servlet/getWishListById/3
 	    @GetMapping(value = "getWishListById/{id}")
@@ -51,7 +51,6 @@ public class MaTacheRestController {
 		}
 	 
 	 
-	// Ajouter User : 
 		// localhost:8081/SpringMVC/servlet/add-wishList
 	 @PostMapping("/add-wishList") 
 	 @ResponseBody 
@@ -78,10 +77,25 @@ public class MaTacheRestController {
 	 public WishList modifyWishList(@RequestBody WishList user) { 
 		 return wishListService.updateWishList(user);
 	 }
+	 
+ 	 // http://localhost:8081/SpringMVC/servlet/getAllWhishListsByClient/5
+	 @GetMapping(value = "getAllWhishListsByClient/{idC}")
+	 @ResponseBody
+	 public List<WishList> getAllWhishListsByClient(@PathVariable("idC") long idClient) {
+		return wishListService.getAllWhishListsByClient(idClient);
+	}
 
 	 	/////////////////// Favoris //////////////////////////////////
 	 
-	// localhost:8081/SpringMVC/servlet/remove-favoris/{favoris-id} 
+		// localhost:8081/SpringMVC/servlet/favoriserAnnonce/1/1
+	 @PostMapping("/favoriserAnnonce/{adId}/{idC}") 
+	 @ResponseBody 
+	 public void favoriserAnnonce(@PathVariable("adId") int adId, @PathVariable("idC") long idC) { 
+		 favoriteAdService.favoriserAnnonce(adId,idC);	
+		// return user; 
+		 }
+	 
+	 // localhost:8081/SpringMVC/servlet/remove-favoris/{favoris-id} 
 			//DELETE
 		 
 		 @DeleteMapping("/remove-favoris/{favoris-id}") 
@@ -99,6 +113,17 @@ public class MaTacheRestController {
 				return favoriteAdService.getAllFavoritesByClient(idclient);
 			}
 		    
+		    // http://localhost:8081/SpringMVC/servlet/getAllFavoritesByClient/5
+			 @GetMapping(value = "getAllFavoritesByClient/{idC}")
+			 @ResponseBody
+			 public List<FavoriteAd> getAllFavoritesByClient(@PathVariable("idC") long idClient) {
+				return favoriteAdService.getAllFavoritesByClient(idClient);
+			}
+		   
+		    
+		    
+		    
 		    
 		 
 }
+

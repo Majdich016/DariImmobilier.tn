@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,6 +44,17 @@ public class Rent extends Ad {
 		StartDate = startDate;
 		EndDate = endDate;
 		this.rentingtype = rentingtype;
+	}
+
+	public Rent(int idAd, String description, String location, Date addDate, int viewsNumber, Boolean success,
+			int score, float price, int nbRooms, int surface, Boolean terrace, Boolean swimmingPool, Boolean garage,
+			Boolean garden, Boolean furnished, Boolean airConditioning, Boolean heater, Boolean buildable,
+			Boolean serviced, KindOfGood kindofgood, User user, List<Comment> comments, Set<Multimedia> multimedias,
+			FavoriteAd favoriteAd) {
+		super(idAd, description, location, addDate, viewsNumber, success, score, price, nbRooms, surface, terrace, swimmingPool,
+				garage, garden, furnished, airConditioning, heater, buildable, serviced, kindofgood, user, comments,
+				multimedias, favoriteAd);
+		// TODO Auto-generated constructor stub
 	}
 
 	public Date getStartDate() {

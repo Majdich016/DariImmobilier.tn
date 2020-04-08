@@ -25,12 +25,16 @@ public class AdServiceImpl implements IAdService {
 	AdRepository adRepository;
 	@Autowired
 	CommentRepository commentRepository;
+	
+	@Autowired
+	WishListService ws;
 	public static final Logger l = LogManager.getLogger(AdServiceImpl.class);
 
 
 	@Override
 	public Ad addAd(Ad ad) {
-		adRepository.save(ad);		
+		adRepository.save(ad);	
+		// ws.NotifSms(ad);
 		return ad;
 	}
 

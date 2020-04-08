@@ -1,6 +1,8 @@
 package tn.esprit.spring.services;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Ad;
 import tn.esprit.spring.entities.Rent;
+import tn.esprit.spring.entities.RentingType;
 import tn.esprit.spring.entities.Sell;
 import tn.esprit.spring.repository.RentRepository;
 import tn.esprit.spring.repository.SellRepository;
@@ -22,6 +25,8 @@ public class AchatLocationServiceImpl implements AchatLocationService {
 	SellRepository sellRepository;
 	@Autowired
 	RentRepository rentRepository;
+	
+		//////////////Filtre 1er niveau////////////////////
 	
 	@Override
 	public List<Sell> SellAds() {
@@ -41,6 +46,54 @@ public class AchatLocationServiceImpl implements AchatLocationService {
 		return wls;
 	}
 	
+	@Override
+	public List<Rent> RentAdsTypeRent() {
+		// TODO Auto-generated method stub
+		List<Rent> list=(List<Rent>)rentRepository.findAll();
+		List<Rent> list1= new ArrayList<>();
+		for (Rent r : list){
+			if (r.getRentingtype().equals(RentingType.RENT))
+			{
+				
+				list1.add(r);
+			}
+		}
+		L.info("whishlist +++"+list1);
+		return list1;
+	}
+	
+	@Override
+	public List<Rent> RentAdsTypeH() {
+		// TODO Auto-generated method stub
+		List<Rent> list=(List<Rent>)rentRepository.findAll();
+		List<Rent> list1= new ArrayList<>();
+		for (Rent r : list){
+			if (r.getRentingtype().equals(RentingType.HOLIDAYS_RENTING))
+			{
+				
+				list1.add(r);
+			}
+		}
+		L.info("whishlist +++"+list1);
+		return list1;
+	}
+	@Override
+	public List<Rent> RentAdsTypeTemp() {
+		// TODO Auto-generated method stub
+		List<Rent> list=(List<Rent>)rentRepository.findAll();
+		List<Rent> list1= new ArrayList<>();
+		for (Rent r : list){
+			if (r.getRentingtype().equals(RentingType.TEMPORARY_RENTING))
+			{
+				
+				list1.add(r);
+			}
+		}
+		L.info("whishlist +++"+list1);
+		return list1;
+	}
+	
+//////////////Filtre 2eme niveau////////////////////
 
 	@Override
 	public List<Ad> FiltreMulticritère() {
@@ -53,4 +106,6 @@ public class AchatLocationServiceImpl implements AchatLocationService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

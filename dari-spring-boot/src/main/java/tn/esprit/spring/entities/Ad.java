@@ -81,6 +81,8 @@ public class Ad implements Serializable{
 		@OneToOne(mappedBy="ad") 
 		FavoriteAd favoriteAd; 
 
+		@OneToOne(cascade = CascadeType.ALL,mappedBy="ad") 
+		Prices price;
 		
 		public Ad() {
 			super();
@@ -361,6 +363,22 @@ public class Ad implements Serializable{
 
 		public void setFavoriteAd(FavoriteAd favoriteAd) {
 			this.favoriteAd = favoriteAd;
+		}
+
+
+
+
+
+		public User getUser() {
+			return user;
+		}
+
+
+
+
+
+		public void setUser(User user) {
+			this.user = user;
 		}
 
 
