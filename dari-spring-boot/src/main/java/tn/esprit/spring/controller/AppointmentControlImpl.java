@@ -44,7 +44,7 @@ public class AppointmentControlImpl {
 		   AppointmentService.deleteAppointment(id);;
 		   }
 		  //http://localhost:8081/SpringMVC/servlet/count
-		  @GetMapping("/count")
+		  @GetMapping("/countappointment")
 		   @ResponseBody
 		   public int CountAppointment() {
 		   return AppointmentService.countAppointment();

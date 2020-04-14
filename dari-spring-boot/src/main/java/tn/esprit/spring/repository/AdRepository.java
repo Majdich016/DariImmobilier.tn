@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import tn.esprit.spring.entities.Ad;
 import tn.esprit.spring.entities.Appointment;
@@ -19,4 +20,7 @@ public interface AdRepository extends CrudRepository<Ad, Integer>{
 	public List<Ad> getAdWithBestLikesOnCommentsJPQL();
 	//UPDATE `t_ad` SET `success` = b'1', `end_date` = '2020-03-31', `start_date` = '2020-03-25', 
 	//`rentingtype` = 'TEMPORARY_RENTING', `rentperiod` = 'DAY', `price` = '200' WHERE `t_ad`.`id_ad` = 1;
+	@Transactional
+	@Query(value="SELECT * FROM `t_ad` t JOIN follow f ON t.user_id_id = f.follow_id AND f.followed_id= :userId ",nativeQuery = true)
+	public List<Ad> affFollow(@Param("userId") int userId);
 }
