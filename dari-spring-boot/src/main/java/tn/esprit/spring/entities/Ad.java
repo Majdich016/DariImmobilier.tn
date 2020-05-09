@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class Ad implements Serializable{
 		
 		private String Description;
 		private String Location;
-		//private int Area; area heya location o.O
+		private int Area;
 		
 		@Temporal(TemporalType.DATE)
 		private Date AddDate;
@@ -41,12 +42,31 @@ public class Ad implements Serializable{
 		private int ViewsNumber;
 		private Boolean Success;
 		private int Score;
-		
-		
-		private float Price;
+		private String Image;
+		@Column(name = "rating", nullable = true)
+		private Integer rating;
+		@Column(name = "rating2", nullable = true)
+		private Integer rating2;
 		private int nbRooms;
 		private int surface;
+		private int nbGarage;
+		private int nbBaths;
+		@Temporal(TemporalType.DATE)
+		private Date AdDate;
+		@Temporal(TemporalType.DATE)
+		private Date StartDate;
 		
+		@Temporal(TemporalType.DATE)
+		private Date EndDate;
+		
+		@Enumerated(EnumType.STRING)
+		//@NotNull
+		private RentPeriod rentperiod;
+		@Column(name = "Price", nullable = true)
+		private float Price;
+		@Enumerated(EnumType.STRING)
+		//@NotNull
+		private RentingType rentingtype;
 		
 		//options
 		private Boolean Terrace;
@@ -90,6 +110,71 @@ public class Ad implements Serializable{
 		}
 
 
+		public Ad(String description, String location, int area, Date adDate,KindOfGood kindofgood) {
+			super();
+			Description = description;
+			Location = location;
+			Area = area;
+			AdDate = adDate;
+			this.kindofgood = kindofgood;
+		}
+		
+
+
+		
+
+		public Ad(int idAd, String description, String location, int area, Date adDate,
+				KindOfGood kindofgood, Date startDate, Date endDate, RentPeriod rentperiod, float price,
+				RentingType rentingtype, int nbGarage, int nbRooms ,String image,int nbBaths) {
+			super();
+			IdAd = idAd;
+			Description = description;
+			Location = location;
+			Area = area;
+			AdDate = adDate;
+			this.kindofgood = kindofgood;
+			StartDate = startDate;
+			EndDate = endDate;
+			this.rentperiod = rentperiod;
+			Price = price;
+			this.rentingtype = rentingtype;
+			this.nbGarage = nbGarage;
+			this.nbRooms = nbRooms;
+			Image = image;
+		}
+
+
+		public Ad(String description, String location, int area, KindOfGood kindofgood, Date startDate, Date endDate,
+				RentPeriod rentperiod,  RentingType rentingtype) {
+			super();
+			Description = description;
+			Location = location;
+			Area = area;
+			this.kindofgood = kindofgood;
+			StartDate = startDate;
+			EndDate = endDate;
+			this.rentperiod = rentperiod;		
+			this.rentingtype = rentingtype;
+
+		}
+
+	public Ad(String description, String location, int area, KindOfGood kindofgood, Date startDate, Date endDate,
+				RentPeriod rentperiod, float price, RentingType rentingtype , int nbGarage, int nbRooms ,String image,int nbBaths) {
+			super();
+			Description = description;
+			Location = location;
+			Area = area;
+			this.kindofgood = kindofgood;
+			StartDate = startDate;
+			EndDate = endDate;
+			this.rentperiod = rentperiod;
+			Price = price;
+			this.rentingtype = rentingtype;
+			this.nbGarage = nbGarage;
+			this.nbRooms = nbRooms;
+			this.Image =image;
+			this.nbBaths = nbBaths;
+		}
 
 
 
@@ -389,6 +474,121 @@ public class Ad implements Serializable{
 			return serialVersionUID;
 		}
 
+
+
+		public int getArea() {
+			return Area;
+		}
+
+
+		public void setArea(int area) {
+			Area = area;
+		}
+
+
+		public String getImage() {
+			return Image;
+		}
+
+
+		public void setImage(String image) {
+			Image = image;
+		}
+
+
+		public Integer getRating() {
+			return rating;
+		}
+
+
+		public void setRating(Integer rating) {
+			this.rating = rating;
+		}
+
+
+		public Integer getRating2() {
+			return rating2;
+		}
+
+
+		public void setRating2(Integer rating2) {
+			this.rating2 = rating2;
+		}
+
+
+		public int getNbGarage() {
+			return nbGarage;
+		}
+
+
+		public void setNbGarage(int nbGarage) {
+			this.nbGarage = nbGarage;
+		}
+
+
+		public int getNbBaths() {
+			return nbBaths;
+		}
+
+
+		public void setNbBaths(int nbBaths) {
+			this.nbBaths = nbBaths;
+		}
+
+
+		public Date getAdDate() {
+			return AdDate;
+		}
+
+
+		public void setAdDate(Date adDate) {
+			AdDate = adDate;
+		}
+
+
+		public Date getStartDate() {
+			return StartDate;
+		}
+
+
+		public void setStartDate(Date startDate) {
+			StartDate = startDate;
+		}
+
+
+		public Date getEndDate() {
+			return EndDate;
+		}
+
+
+		public void setEndDate(Date endDate) {
+			EndDate = endDate;
+		}
+
+
+		public RentPeriod getRentperiod() {
+			return rentperiod;
+		}
+
+
+		public void setRentperiod(RentPeriod rentperiod) {
+			this.rentperiod = rentperiod;
+		}
+
+
+		public RentingType getRentingtype() {
+			return rentingtype;
+		}
+
+
+		public void setRentingtype(RentingType rentingtype) {
+			this.rentingtype = rentingtype;
+		}
+
+
+		public void setPrice(Prices price) {
+			this.price = price;
+		}
 
 
 		@Override

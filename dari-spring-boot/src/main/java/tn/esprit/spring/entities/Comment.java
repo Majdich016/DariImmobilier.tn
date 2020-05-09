@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "T_COMMENT")
 
@@ -24,7 +26,10 @@ public class Comment implements Serializable{
 			private int NumberLikes;
 			
 			private Boolean IsBlocked;
-			
+
+			@JsonIgnore
+			@ManyToOne
+			private Client client;
 			@ManyToOne
 			private Ad ads;
 
@@ -70,6 +75,16 @@ public class Comment implements Serializable{
 
 			public static long getSerialversionuid() {
 				return serialVersionUID;
+			}
+			
+			
+
+			public Client getClient() {
+				return client;
+			}
+
+			public void setClient(Client client) {
+				this.client = client;
 			}
 
 			public Comment() {

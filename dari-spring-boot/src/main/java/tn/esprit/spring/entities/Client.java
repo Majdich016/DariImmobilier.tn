@@ -1,8 +1,8 @@
 package tn.esprit.spring.entities;
 
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -26,7 +26,10 @@ public class Client extends User{
 	private int nbre;
 	private boolean block;
 	
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="client",fetch = FetchType.EAGER)
+	private Set<Ad> Ad;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="client",fetch = FetchType.LAZY)
+	private List<Comment> comments;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
 	private Set<AppointmentFeedBack> AppointmentFeedBack;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
@@ -77,6 +80,13 @@ public class Client extends User{
 	}
 	public void setHistoriqueAL(HistoriqueAL historiqueAL) {
 		this.historiqueAL = historiqueAL;
+	}
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 	public Client(Long id, String firstName, String lastname, Date dateNaissance, String email, String password,
 			Long id2, String picture, String descriptionBlock, int nbre, boolean block) {

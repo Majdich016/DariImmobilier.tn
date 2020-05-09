@@ -40,13 +40,13 @@ public class UserRestController {
 		  
 	}
 	
-	@GetMapping("/getAnnoncefollower/{userId}") 
+/*	@GetMapping("/getAnnoncefollower/{userId}") 
 	@ResponseBody 
 	 //http://localhost:8081/SpringMVC/servlet/getAnnoncefollower 
 	 public List<Ad> getAnnoncefollower(@PathVariable("userId") int userId) { 
 		return adRepository.affFollow(userId);
 		  
-	}
+	}*/
 	
 	 @GetMapping("/authentification/{email}/{password}") 
 	 @ResponseBody 
