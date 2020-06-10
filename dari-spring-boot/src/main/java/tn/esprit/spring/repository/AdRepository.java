@@ -7,6 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import tn.esprit.spring.entities.Ad;
+import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.Client;
+import tn.esprit.spring.entities.User;
 
 
 public interface AdRepository extends CrudRepository<Ad, Integer>{
@@ -31,9 +34,40 @@ public interface AdRepository extends CrudRepository<Ad, Integer>{
 	
 	
 
-	@Query(value="SELECT * FROM `t_ad` order by `price` ",nativeQuery = true)
+	@Query(value="SELECT DISTINCT a FROM Ad a order by price ")
 	public List<Ad> filter();
 	
 	
+	
+	@Query(value="SELECT nbLikes FROM Ad where IdAd=:id")
+	public int getNumberLike(@Param("id")int id);
+	
+	@Query(value="SELECT nbDisLikes FROM Ad where IdAd=:id")
+	public int getNumberDislike(@Param("id")int id);
+
+	
+	@Query("select DISTINCT a from Ad a join a.user u where a.user=:ClientConnecte")
+	List<Ad> MyAds(@Param("ClientConnecte")User user);
+	@Query("select DISTINCT a from Ad a join a.appointment d  where d.purchased='True'")
+	List<Ad> SelectedAd();
+	@Query("select DISTINCT a from Ad a join a.appointment d join d.client where d.client=:ClientConnecte")
+	List<Appointment> ReceivedAppointment(@Param("ClientConnecte")Client client);
+	
+	
+	@Query(value = "select" + " a FROM Ad a " + "where a.kindofgood='Villa'")
+	public List<Ad> retrieveAllVillaJPQL();
+
+	@Query(value = "select" + " a FROM Ad a " + "where a.kindofgood='Apartment'")
+	public List<Ad> retrieveAllAppartementJPQL();
+
+	@Query(value = "select" + " a FROM Ad a " + "where a.kindofgood='Studio'")
+	public List<Ad> retrieveAllStudioJPQL();
+
+	@Query(value = "select" + " a FROM Ad a " + "where a.kindofgood='Workshop'")
+	public List<Ad> retrieveAllWorkshopJPQL();
+	
+	
+	@Query(value="SELECT count(IdAd) FROM Ad  ")
+	public int Countads();
 }
 

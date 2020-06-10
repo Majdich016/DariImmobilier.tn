@@ -3,6 +3,7 @@ package tn.esprit.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Ad;
+import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Comment;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.services.IAdService;
 
 @RestController
@@ -58,7 +61,7 @@ public class RestControlAd {
         "idAd": 1,
         "area": 250
     },*/
-/* {
+	/* {
         "kindofgood": "Apartment",
         "comments": [],
         "multimedias": [],
@@ -101,10 +104,11 @@ public class RestControlAd {
 	// localhost:8081/SpringMVC/servlet/add-comment
 	//POST
 
-	@PostMapping("/add-comment/{idClient}/{idPub}") 
+	@PostMapping("/add-comment/{idClient}/{idPub}/{blocked}") 
 	@ResponseBody 
-	public Comment addComment(@RequestBody Comment comment,@PathVariable("idClient") Long idClient,@PathVariable("idPub") Integer idPub) { 
-		iadService.addComment(comment,idClient,idPub); 
+	public Comment addComment(@RequestBody Comment comment,@PathVariable("idClient") Long idClient,@PathVariable("idPub") Integer idPub,@PathVariable("blocked")Boolean isBlocked) { 
+		iadService.addComment(comment,idClient,idPub,isBlocked); 
+
 		return comment; }
 
 	// localhost:8081/SpringMVC/servlet/modify-ad  
@@ -116,10 +120,10 @@ public class RestControlAd {
 
 	// /localhost:8081/deleteComment/{IdComment} 
 	//DELETE
-	@DeleteMapping("/deleteComment/{IdComment}") 
+	@DeleteMapping("/deleteComment/{idComment}") 
 	@ResponseBody 
-	public void deleteComment(@PathVariable("IdComment") int IdComment) { 
-		iadService.deleteComment(IdComment);}  
+	public void deleteComment(@PathVariable("idComment") int idComment) { 
+		iadService.deleteComment(idComment);}  
 
 	// localhost:8081/SpringMVC/servlet/modify-comment  
 	//PUT
@@ -142,14 +146,14 @@ public class RestControlAd {
 	public List<String> getAllCommentsByAd(@PathVariable("idad") int AdId) {
 		return iadService.getAllCommentsByAd(AdId);
 	}
-	
+
 	// http://localhost:8081/getComments
 	@GetMapping(value = "/getComments")
 	@ResponseBody
 	public List<Comment> getComments() {
 		List<Comment> list = iadService.retrieveAllComments(); 
 		return list;  } 	
-	
+
 
 	// http://localhost:8081/SpringMVC/servlet/countComments
 	@GetMapping(value = "/countComments")
@@ -204,14 +208,21 @@ public class RestControlAd {
 	public boolean BlockCommentsWithInsultingWords()  {
 		return iadService.BlockCommentsWithInsultingWords();
 	}
-	
+
 	// http://localhost:8081/SpringMVC/servlet/BlockCommentsWithInsultingWords2
-		@PutMapping(value = "/BlockCommentsWithInsultingWords2")
-		@ResponseBody
-	public boolean BlockCommentsWithInsultingWords2() {
-		return iadService.BlockCommentsWithInsultingWords2();
+	@PutMapping(value = "/BlockCommentsWithInsultingWords2/{id}")
+	@ResponseBody
+	public boolean BlockCommentsWithInsultingWords2(@PathVariable("id")int id) {
+		return iadService.BlockCommentsWithInsultingWords2(id);
 	}
-	
+
+
+	@PutMapping(value = "/BlockCommentsWithInsultingWords3/{id}")
+	@ResponseBody
+	public void BlockCommentsWithInsultingWords3(@PathVariable("id")int id) {
+		iadService.BlockCommentsWithInsultingWords3(id);
+	}
+
 
 	// http://localhost:8081/SpringMVC/servlet/ScoreIncrement
 	@PutMapping(value = "/ScoreIncrement")
@@ -237,7 +248,7 @@ public class RestControlAd {
 	@ResponseBody
 	public List<String> getAllCommentsBlockedJPQL() {
 		return iadService.getAllCommentsBlockedJPQL();
-		
+
 	}
 	// http://localhost:8081/SpringMVC/servlet/getAdsFromTheSameUserJPQL
 	@GetMapping(value = "/getAdsFromTheSameUserJPQL")
@@ -245,52 +256,73 @@ public class RestControlAd {
 	public List<String> getAdsFromTheSameUserJPQL() {
 		return iadService.getAdsFromTheSameUserJPQL();
 	}
-	
+
 	// http://localhost:8081/SpringMVC/servlet/countCommentsJPQL/1
-		@GetMapping(value = "/countCommentsJPQL/{idad}")
-		@ResponseBody
+	@GetMapping(value = "/countCommentsJPQL/{idad}")
+	@ResponseBody
 	public int countCommentsJPQL(@PathVariable("idad")int IdAd) {
 		return iadService.countCommentsJPQL(IdAd);
 	}
-		// http://localhost:8081/getNumberView/1
-				@GetMapping(value = "/getNumberView/{idad}")
-				@ResponseBody
-		public int getNumberView(@PathVariable("idad")int idad) {
-			return iadService.getNumberView(idad);
-				}
-		// http://localhost:8081/increment
+	// http://localhost:8081/getNumberView/1
+	@GetMapping(value = "/getNumberView/{idad}")
+	@ResponseBody
+	public int getNumberView(@PathVariable("idad")int idad) {
+		return iadService.getNumberView(idad);
+	}
+	// http://localhost:8081/increment
 	@PutMapping(value = "/increment/{idad}")
 	@ResponseBody	
 	public void increment(@PathVariable("idad")int idad) {
 		iadService.increment(idad);
-	
-				}
-	
+
+	}
+
 	// http://localhost:8081/ReclamerUser
 	@PutMapping(value = "/ReclamerUser")
 	@ResponseBody	
 	public void ReclamerUser() {
 		iadService.ReclamerUser();
 	}
-	// http://localhost:8081/BlockUserByBadComments
-		@PutMapping(value = "/BlockUserByBadComments")
-		@ResponseBody	
-	public void BlockUserByBadComments() {
-		iadService.BlockUserByBadComments();
+	// http://localhost:8081/BlockUserByBadComments1
+	@PutMapping(value = "/BlockUserByBadComments1/{idu}")
+	@ResponseBody	
+	public void BlockUserByBadComments1(@PathVariable("idu") Long id){
+		iadService.BlockUserByBadComments(id);
 	}
-		   
-	    // http://localhost:8081/filtre
-	       @GetMapping(value = "/filtre")
-			@ResponseBody	
-			public List<Ad> filter() {
+
+
+	// http://localhost:8081/filtre
+	@GetMapping(value = "/filtre")
+	@ResponseBody	
+	public List<Ad> filter() {
 		return iadService.filter();
 	}
-	       
-	       // http://localhost:8081/DescriptionComments
-	       @GetMapping(value = "/DescriptionComments/{idc}")
-			@ResponseBody	
-			public List<Comment> DescriptionComments(@PathVariable("idc")int idc) {
-	   		return 	(List<Comment>) iadService.DescriptionComments(idc);
-	   		
-	   	}
+
+	// http://localhost:8081/DescriptionComments
+	@GetMapping(value = "/DescriptionComments/{idc}")
+	@ResponseBody	
+	public List<Comment> DescriptionComments(@PathVariable("idc")int idc) {
+		return 	(List<Comment>) iadService.DescriptionComments(idc);
+
+	}
+	// http://localhost:8081/Image
+	@GetMapping(value = "/Image")
+	@ResponseBody	
+	public String Image() {
+		return   iadService.Image();
+	}
+
+	// http://localhost:8081/MyAds
+
+	@GetMapping(value = "/MyAds/{ClientConnecte}")
+	@ResponseBody
+	public List<Ad> MyAds(@PathVariable("ClientConnecte")User user){
+		return iadService.MyAds(user);
+	}
+	// http://localhost:8081/SelectedAd
+	@GetMapping(value = "/SelectedAd")
+	@ResponseBody
+	List<Ad> SelectedAd(){
+		return iadService.SelectedAd();
+	}
 }

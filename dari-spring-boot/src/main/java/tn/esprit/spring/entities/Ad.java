@@ -35,10 +35,12 @@ public class Ad implements Serializable{
 		private String Description;
 		private String Location;
 		private int Area;
-		
+		@Enumerated(EnumType.STRING)
+		private Etat etat;
 		@Temporal(TemporalType.DATE)
 		private Date AddDate;
-
+		private int nbLikes;
+		private int nbDisLikes;
 		private int ViewsNumber;
 		private Boolean Success;
 		private int Score;
@@ -103,6 +105,9 @@ public class Ad implements Serializable{
 
 		@OneToOne(cascade = CascadeType.ALL,mappedBy="ad") 
 		Prices price;
+		
+		
+		
 		
 		public Ad() {
 			super();
@@ -588,6 +593,39 @@ public class Ad implements Serializable{
 
 		public void setPrice(Prices price) {
 			this.price = price;
+		}
+
+
+		
+		
+		
+		public int getNbLikes() {
+			return nbLikes;
+		}
+
+
+		public void setNbLikes(int nbLikes) {
+			this.nbLikes = nbLikes;
+		}
+
+
+		public int getNbDisLikes() {
+			return nbDisLikes;
+		}
+
+
+		public void setNbDisLikes(int nbDisLikes) {
+			this.nbDisLikes = nbDisLikes;
+		}
+
+
+		public Etat getEtat() {
+			return etat;
+		}
+
+
+		public void setEtat(Etat etat) {
+			this.etat = etat;
 		}
 
 

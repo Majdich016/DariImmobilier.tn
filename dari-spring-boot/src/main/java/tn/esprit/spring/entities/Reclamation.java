@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 @Entity
 public class Reclamation implements Serializable{
 
@@ -18,6 +19,9 @@ public class Reclamation implements Serializable{
 	private String Description;
 	@ManyToOne(cascade = CascadeType.ALL) 
 	User userId;
+	
+	@OneToOne(cascade = CascadeType.REMOVE)
+	private Comment commentaire;
 
 	public Long getId() {
 		return id;
@@ -35,6 +39,12 @@ public class Reclamation implements Serializable{
 	
 	
 	
+	public Comment getCommentaire() {
+		return commentaire;
+	}
+	public void setCommentaire(Comment commentaire) {
+		this.commentaire = commentaire;
+	}
 	public User getUserId() {
 		return userId;
 	}

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,49 +14,63 @@ import javax.faces.context.FacesContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
-import org.ocpsoft.rewrite.faces.navigate.Navigate;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.donut.DonutChartDataSet;
+import org.primefaces.model.charts.donut.DonutChartModel;
+import org.primefaces.model.file.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 import tn.esprit.spring.entities.Ad;
+
 import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Comment;
+import tn.esprit.spring.entities.Etat;
 import tn.esprit.spring.entities.KindOfGood;
+
+import tn.esprit.spring.entities.Reclamation;
 import tn.esprit.spring.entities.RentPeriod;
 import tn.esprit.spring.entities.RentingType;
 import tn.esprit.spring.entities.User;
+
 import tn.esprit.spring.services.IAdService;
+import tn.esprit.spring.services.MailService;
+
 import tn.esprit.spring.services.RatingView;
 
 
+
 @Scope(value = "session")
-@Controller(value = "adController")
 @ELBeanName(value = "adController")
-@Join(path = "/", to = "/gererAd/basic.jsf")
+//@Join(path = "/", to = "/gererAd/basic.jsf")
+@Controller(value = "adController")
 public class IControllerAdImpl {
 
 
 	public static final Logger l = LogManager.getLogger(IControllerAdImpl.class);
-
-
-
+	@Autowired
+	UserRestController urc;
 	@Autowired
 	IAdService iadService;
 	@Autowired
 	IAdService adService;
 	@Autowired
 	RatingView ratingview;
+	
+	@Autowired
+	MailService mails;
+	
+	
 	private int IdAd;
 	private Ad ad;
 	private Comment c;
 	private List<Ad> ads;
-	private List<Ad> kk;
+	private List<Ad> filterprix;
 	private List<Comment> com;
 	private String Description;
 	private String Location;
@@ -65,7 +80,6 @@ public class IControllerAdImpl {
 	private KindOfGood kindofgood;
 	private Date AdDate;
 	private Integer adIdToBeUpdated;
-	private Integer CommetIdToBeUpdated;
 	private int ViewsNumber;
 	private Boolean Success;
 	private int Score;
@@ -74,6 +88,7 @@ public class IControllerAdImpl {
 	private RentPeriod rentperiod;
 	private RentingType rentingtype;
 	private float Price;
+	private UploadedFile file;
 	private String DescriptionComment;
 	private int NumberLikes;
 	private User user;
@@ -85,17 +100,26 @@ public class IControllerAdImpl {
 	private int a;
 	private int nbRooms;
 	private int nbGarage;
-	private String destination = "C:\\work\\Pidevtest\\uploads\\";
+	private Integer CommetIdToBeUpdated;
+	private String destination = "C:\\work\\Pidevtest_template\\src\\main\\resources\\META-INF\\resources\\upload\\";
 	private Ad Ads;
-
-
-
-
-
-
-
-
-
+	private String updatedComment;
+	private DonutChartModel donutModel;
+	private DonutChartModel donutModel2;
+	private int nbDisLikes;
+	private Etat etat;
+	private Boolean Furnished;
+	private Boolean Terrace;
+	private Boolean Garden;
+	private Boolean SwimmingPool;
+	private Boolean SousSol;
+	private Boolean Garage;
+	private Boolean AirConditioning;
+	private Boolean Ascenseur;
+	private Boolean Heater;
+	private String newComment;
+	private List<Reclamation> reclamations;
+	private int IdRec;
 	////////////////////////////////////Getters&Setters////////////////////////////////////////////////////////////
 
 
@@ -107,11 +131,270 @@ public class IControllerAdImpl {
 
 	
 
+
+
+	public List<Reclamation> getReclamations() {
+		return reclamations;
+	}
+
+
+
+
+
+	public void setReclamations(List<Reclamation> reclamations) {
+		this.reclamations = reclamations;
+	}
+
+
+
+
+
+	public String getNewComment() {
+		return newComment;
+	}
+
+
+
+
+
+	public void setNewComment(String newComment) {
+		this.newComment = newComment;
+	}
+
+
+
+
+
+	public MailService getMails() {
+		return mails;
+	}
+
+
+
+
+
+	public void setMails(MailService mails) {
+		this.mails = mails;
+	}
+
+
+
+
+	public Etat getEtat() {
+		return etat;
+	}
+
+
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
+	}
+
+
+
+	public UserRestController getUrc() {
+		return urc;
+	}
+
+
+
+	public void setUrc(UserRestController urc) {
+		this.urc = urc;
+	}
+
+
+
+	public Boolean getFurnished() {
+		return Furnished;
+	}
+
+
+
+	public void setFurnished(Boolean furnished) {
+		Furnished = furnished;
+	}
+
+
+
+	public Boolean getTerrace() {
+		return Terrace;
+	}
+
+
+
+	public void setTerrace(Boolean terrace) {
+		Terrace = terrace;
+	}
+
+
+
+	public Boolean getGarden() {
+		return Garden;
+	}
+
+
+
+	public void setGarden(Boolean garden) {
+		Garden = garden;
+	}
+
+
+
+	public Boolean getSwimmingPool() {
+		return SwimmingPool;
+	}
+
+
+
+	public void setSwimmingPool(Boolean swimmingPool) {
+		SwimmingPool = swimmingPool;
+	}
+
+
+
+	public Boolean getSousSol() {
+		return SousSol;
+	}
+
+
+
+	public void setSousSol(Boolean sousSol) {
+		SousSol = sousSol;
+	}
+
+
+
+	public Boolean getGarage() {
+		return Garage;
+	}
+
+
+
+	public void setGarage(Boolean garage) {
+		Garage = garage;
+	}
+
+
+
+	public Boolean getAirConditioning() {
+		return AirConditioning;
+	}
+
+
+
+	public void setAirConditioning(Boolean airConditioning) {
+		AirConditioning = airConditioning;
+	}
+
+
+
+	public Boolean getAscenseur() {
+		return Ascenseur;
+	}
+
+
+
+	public void setAscenseur(Boolean ascenseur) {
+		Ascenseur = ascenseur;
+	}
+
+
+
+	public Boolean getHeater() {
+		return Heater;
+	}
+
+
+
+	public void setHeater(Boolean heater) {
+		Heater = heater;
+	}
+
+
+
+	public static Logger getL() {
+		return l;
+	}
+
+
+
+	public DonutChartModel getDonutModel2() {
+		return donutModel2;
+	}
+
+
+
+	public void setDonutModel2(DonutChartModel donutModel2) {
+		this.donutModel2 = donutModel2;
+	}
+
+
+
+	public DonutChartModel getDonutModel() {
+		return donutModel;
+	}
+
+
+
+	public void setDonutModel(DonutChartModel donutModel) {
+		this.donutModel = donutModel;
+	}
+
+
+
+	public int getNbDisLikes() {
+		return nbDisLikes;
+	}
+
+
+
+	public void setNbDisLikes(int nbDisLikes) {
+		this.nbDisLikes = nbDisLikes;
+	}
+
+
+
 	public void setAds(Ad ads) {
 		Ads = ads;
 	}
 
 
+
+	public RatingView getRatingview() {
+		return ratingview;
+	}
+
+
+
+	public void setRatingview(RatingView ratingview) {
+		this.ratingview = ratingview;
+	}
+
+
+
+	public String getDestination() {
+		return destination;
+	}
+
+
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+
+
+	public Integer getCommetIdToBeUpdated() {
+		return CommetIdToBeUpdated;
+	}
+
+	public void setCommetIdToBeUpdated(Integer commetIdToBeUpdated) {
+		this.CommetIdToBeUpdated = commetIdToBeUpdated;
+	}
+
+	public void setAd(Ad ad) {
+		this.ad = ad;
+	}
 
 	public int getNbRooms() {
 		return nbRooms;
@@ -243,6 +526,16 @@ public class IControllerAdImpl {
 	public void setNumberLikes(int numberLikes) {
 		NumberLikes = numberLikes;
 	}
+	  
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+	 
+
 
 	public float getPrice() {
 		return Price;
@@ -299,14 +592,6 @@ public class IControllerAdImpl {
 
 	public void setAdIdToBeUpdated(Integer adIdToBeUpdated) {
 		this.adIdToBeUpdated = adIdToBeUpdated;
-	}
-	
-	public Integer getCommetIdToBeUpdated() {
-		return CommetIdToBeUpdated;
-	}
-
-	public void setCommetIdToBeUpdated(Integer commetIdToBeUpdated) {
-		CommetIdToBeUpdated = commetIdToBeUpdated;
 	}
 
 	public int getIdAd() {
@@ -418,20 +703,39 @@ public class IControllerAdImpl {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
- public Ad addAd(Ad ad) { Ad a = iadService.addAd(ad); return a; }
+ public String getUpdatedComment() {
+		return updatedComment;
+	}
+
+
+
+	public void setUpdatedComment(String updatedComment) {
+		this.updatedComment = updatedComment;
+	}
+
+
+
+public Ad addAd(Ad ad) { Ad a = iadService.addAd(ad); return a; }
 
 	
-
-
-	public void addad() {
+	public String addad() {
 		
-
-	adService.addOrUpdateAd(new Ad(Description, Location, Area,kindofgood, StartDate,EndDate,rentperiod,Price,rentingtype,nbGarage,nbRooms,Image,nbBaths));
-			
-		
-		}
-
+		//Ad tmp = new Ad(Description, Location, Area,kindofgood, StartDate,EndDate,rentperiod,Price,rentingtype,nbGarage,nbRooms,nbBaths,c);
 	
+		
+		Date currentdate = new Date();
+		Ad adnotif;
+		
+	
+		
+		//mails.sendEmail(user);
+		//System.out.println("ededededede " + file.getFileName());
+
+		
+		return "/gererAd/basic.xhtml?faces-redirect=true";
+
+	}
+
 
 
 	public String SeeAllAds(){
@@ -439,18 +743,35 @@ public class IControllerAdImpl {
 		return "/gererAd/basic.xhtml?faces-redirect=true";
 	}
 	
+	/*public List<Ad> getKk() {
 	
-	public void setKk(List<Ad> kk) {
-		this.kk = kk;
+
+		kk=adService.filter();
+
+		return kk;
 	}
+*/
+	
 
 	public void deleteAd(int IdAd) {
-		
+		iadService.deleteAd(IdAd);
+	}
+
+	public List<Ad> getFilterprix() {
+		filterprix=adService.filter();
+		return filterprix;
+	}
+
+	public void setFilterprix(List<Ad> filterprix) {
+		this.filterprix = filterprix;
+	}
+
+
+	public void removeAddash(int IdAd) {
 		iadService.deleteAd(IdAd);
 	}
 
 	public String removeAd(int IdAd) {
-		adService.getAdById(IdAd);
 		adService.deleteAd(IdAd);
 		return "/gererAd/basic.xhtml?faces-redirect=true";
 	}
@@ -473,6 +794,7 @@ public class IControllerAdImpl {
 		this.setRentingtype(ad.getRentingtype());
 		this.setNbBaths(ad.getNbBaths());
 		
+		
 		return "/gererAd/ModifyTemplate.xhtml?faces-redirect=true";
 	
 	}
@@ -480,7 +802,8 @@ public class IControllerAdImpl {
 	
 	public String openDetail(Ad aad){
 	     ad = aad;
-			return "/gererAd/ModifyTemplate.xhtml?faces-redirect=true";
+	 	
+			return "/gererAd/chaquead.xhtml?faces-redirect=true";
 	    }
 	public String go() {
 		return "/gererAd/ModifyTemplate.xhtml?faces-redirect=true";
@@ -538,8 +861,18 @@ public class IControllerAdImpl {
 
 	} 
 	
+		
+	
+	
 	public String updateAd() {
-		adService.addOrUpdateAd(new Ad(adIdToBeUpdated,Description, Location, Area,AdDate,kindofgood,StartDate,EndDate,rentperiod,Price,rentingtype,nbGarage,nbRooms,Image,nbBaths));
+		
+		
+		Date currentdate = new Date();
+		//Ad adnotif;
+		
+	//	adService.addOrUpdateAd(new Ad(adIdToBeUpdated,Description, Location, Area,currentdate,kindofgood,StartDate,EndDate,rentperiod,Price,rentingtype,nbGarage,nbRooms,Image,nbBaths,currentuser));
+		
+		
 		return "/gererAd/basic.xhtml?faces-redirect=true";
 
 	}
@@ -556,6 +889,7 @@ public class IControllerAdImpl {
 		FacesContext.getCurrentInstance().addMessage(null, message);}
 
 	public String getAdById1(int idAd) {
+
 		l.info("aaaaaaaaaa"+idAd);
 		adService.getAdById(idAd);
 		//getAllCommentsByAd
@@ -565,45 +899,80 @@ public class IControllerAdImpl {
 	}
 
 
+	public String addComment() {
+
+		
+		
+		System.out.println("cmnt " + newComment);
+		Comment cmnt = new Comment();
+		cmnt.setDescriptionComment(newComment);
+		cmnt.setIsBlocked(false);
+		cmnt.setAds(ad);
+		
+		adService.addCommentaire(cmnt);
+		return "/gererAd/basic.xhtml?faces-redirect=true";
+
+	}
+
+	public String addComment1(int idAd) {
+	
+		
+		
+		return "/gererAd/basic.xhtml?faces-redirect=true";
+	}
 
 
-	public String removeComment(int IdComment) {
+	public String removeComment(int idComment) {
 		//String navigateTo = "null";
-		l.info("hhhhhhhhhhh"+ IdComment);
-		adService.deleteComment(IdComment);
+		l.info("hhhhhhhhhhh"+ idComment);
+		adService.deleteComment(idComment);
 		return "/gererAd/basic.xhtml?faces-redirect=true";
 
 
 	}
-	public String deleteComment(int IdComment) {
-		adService.deleteComment(IdComment);
+	/*public String deleteComment(int idComment) {
+		adService.deleteComment(idComment);
 		return "/gererAd/basic.xhtml?faces-redirect=true";}
 		
-	
-	
+	*/
+	public List<Comment> listCommentaire(Ad ad) {
+		return ad.getComments();
+	}
 	
 	public Comment UpdateComment(Comment comment) {
-		adService.UpdateComment(comment);
-		return comment;
+		return adService.UpdateComment(comment);
+		
 	}
 	
 	
-	
+	public String ModifyComment() {
+		System.out.println("cccmmt "+updatedComment);
+		l.info("modifyyyyyy    "+ CommetIdToBeUpdated);
+	return "/gererAd/basic.xhtml?faces-redirect=true";
+	}
 
 
 	public void AssignCommentToanAd(int CommentId, int AdId) {
-
 		iadService.AssignCommentToanAd(CommentId, AdId);
 	}
 
 	public List<String> getAllCommentsByAd(int AdId) {
 		return adService.getAllCommentsByAd(AdId);
 	}
-	
+	public void displayComment(Comment com) {
+		
+		this.setUpdatedComment(com.getDescriptionComment());
+		this.setNumberLikes(com.getNumberLikes());
+		this.setClient(com.getClient());
+		this.setAds(com.getAds());
+		this.setCommetIdToBeUpdated(com.getIdComment());
+	}
+
 
 	public String displayAdComment(Comment c) {
 
 		this.setDescriptionComment(c.getDescriptionComment());
+		this.setCommetIdToBeUpdated(c.getIdComment());
 		return "/gererAd/showComments.xhtml?faces-redirect=true";
 
 	}
@@ -693,29 +1062,185 @@ public class IControllerAdImpl {
 
 
 
-	public boolean BlockCommentsWithInsultingWords2() {
-		return iadService.BlockCommentsWithInsultingWords2();
+	public String BlockCommentsWithInsultingWords2(int idComment) {
+		
+		//c = adService.getCommentById(IdComment);
+		l.info("Id Of Comment isssssss   " + idComment);
+		adService.getCommentById(idComment);
+		 iadService.BlockCommentsWithInsultingWords2(idComment);
+		//Long idclient =c.getClient().getId();
+		adService.BlockUserByBadComments(c.getClient().getId());
+		 return "/gererAd/DescriptionComment.xhtml?faces-redirect=true\";";
+	
 	}
 
-	public void ReclamerUser() {
-		iadService.ReclamerUser();
+	
+	
+	public String incrementdislike(int idad) {
+		adService.incrementdislike(idad);
+		return "/gererAd/basic.xhtml?faces-redirect=true";
 	}
-	public void BlockUserByBadComments() {
-		adService.BlockUserByBadComments();
+	public String incrementlike(int idad) {
+		 adService.incrementlike(idad);
+		return "/gererAd/basic.xhtml?faces-redirect=true";
 	}
 
+	/*private List<Predicate<Ad>> configFilter(Filter<Ad> filter) {
+    List<Predicate<Ad>> predicates = new ArrayList<>();
+    if (filter.hasParam("id")) {
+        Predicate<Ad> idPredicate = (Ad c) -> c.getIdAd().equals(filter.getParam("id"));
+        predicates.add(idPredicate);
+    }
+
+    if (filter.hasParam("minPrice") && filter.hasParam("maxPrice")) {
+        Predicate<Ad> minMaxPricePredicate = (Ad c) -> c.getPrice()
+                >= Double.valueOf((String) filter.getParam("minPrice")) && c.getPrice()
+                <= Double.valueOf((String) filter.getParam("maxPrice"));
+        predicates.add(minMaxPricePredicate);
+    } else if (filter.hasParam("minPrice")) {
+        Predicate<Ad> minPricePredicate = (Ad c) -> c.getPrice()
+                >= Double.valueOf((String) filter.getParam("minPrice"));
+        predicates.add(minPricePredicate);
+    } else if (filter.hasParam("maxPrice")) {
+        Predicate<Ad> maxPricePredicate = (Ad c) -> c.getPrice()
+                <= Double.valueOf((String) filter.getParam("maxPrice"));
+        predicates.add(maxPricePredicate);
+    }
+
+    if (has(filter.getEntity())) {
+    	Ad filterEntity = filter.getEntity();
+        if (has(filterEntity.getModel())) {
+            Predicate<Ad> modelPredicate = (Ad c) -> c.getModel().toLowerCase().contains(filterEntity.getModel().toLowerCase());
+            predicates.add(modelPredicate);
+        }
+
+        if (has(filterEntity.getPrice())) {
+            Predicate<Ad> pricePredicate = (Ad c) -> c.getPrice().equals(filterEntity.getPrice());
+            predicates.add(pricePredicate);
+        }
+
+        if (has(filterEntity.getName())) {
+            Predicate<Ad> namePredicate = (Ad c) -> c.getName().toLowerCase().contains(filterEntity.getName().toLowerCase());
+            predicates.add(namePredicate);
+        }
+    }
+    return predicates;
+}*/
 	public List<Ad> filter(){
 
 		return iadService.filter();
 	}
+	
 	public List<Comment> DescriptionComments(int idc) {
 		return iadService.DescriptionComments(idc);
 	}
 
 
 
-	
-	
+	public void upload() {
 
-	  
+		if (file != null) {
+			FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		} else
+			System.out.println("file is null");
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		l.info("ddddddddddddddd " + event.getFile().getFileName());
+		FacesMessage msg = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void TransferFile(String fileName, InputStream in) {
+		try {
+			OutputStream out = new FileOutputStream(new File(destination + fileName));
+			int reader = 0;
+			byte[] bytes = new byte[(int) file.getSize()];
+			while ((reader = in.read(bytes)) != -1) {
+				out.write(bytes, 0, reader);
+			}
+			in.close();
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	
+	public List<Ad> retrieveAllVillaJPQL(KindOfGood kindofgood) {
+		return adService.retrieveAllVillaJPQL(kindofgood);
+	}
+
+	
+	public List<Ad> retrieveAllAppartementJPQL(KindOfGood kindofgood) {
+		return adService.retrieveAllAppartementJPQL(kindofgood);
+	}
+
+	public List<Ad> retrieveAllStudioJPQL(KindOfGood kindofgood) {
+		return adService.retrieveAllStudioJPQL(kindofgood);
+	}
+
+	
+	public List<Ad> retrieveAllWorkshopJPQL(KindOfGood kindofgood) {
+		return adService.retrieveAllWorkshopJPQL(kindofgood);
+	}
+	
+	
+	public String donutGraph(Model model) {
+	
+		donutModel = new DonutChartModel();
+        ChartData data = new ChartData();
+         
+        DonutChartDataSet dataSet = new DonutChartDataSet();
+        List<Number> values = new ArrayList<>();
+        values.add(adService.retrieveAllAppartementJPQL(kindofgood).size());
+		values.add(adService.retrieveAllStudioJPQL(kindofgood).size());
+		values.add(adService.retrieveAllVillaJPQL(kindofgood).size());
+		values.add(adService.retrieveAllWorkshopJPQL(kindofgood).size());
+        dataSet.setData(values);
+
+        List<String> bgColors = new ArrayList<>();
+        bgColors.add("rgb(255, 99, 132)");
+		bgColors.add("rgb(183, 185, 189)");
+		bgColors.add("rgb(255, 205, 86)");
+		bgColors.add("rgb(54, 162, 235)");
+		
+        dataSet.setBackgroundColor(bgColors);
+         
+		data.addChartDataSet(dataSet);
+
+		List<String> labels = new ArrayList<>();
+		labels.add("Villa");
+		labels.add("Apartment");
+		labels.add("Studio");
+		labels.add("Workshop");
+		data.setLabels(labels);
+		donutModel.setData(data);
+		return "/gererAd/donutGraph.xhtml?faces-redirect=true";
+        
+	}
+	
+	
+	
+	
+	public void ReclamerUser() {
+		iadService.ReclamerUser();
+	}
+
+
+	public void addMessage(String summary, String detail) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	public void BlockUserByBadComments1(Long id){
+		//Long idclient =c.getClient().getId();
+		adService.BlockUserByBadComments(id);
+	
+	}
+	public int Countads() {
+		return adService.Countads();
+	}
+	
 }
